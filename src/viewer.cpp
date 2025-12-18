@@ -707,6 +707,7 @@ void Viewer::draw(NVGcontext *ctx) {
     int appIcon = nvgImageIcon(ctx, instantmeshes);
     int size = mSize.norm() / 2;
 
+    /*
     NVGpaint imgPaint =
         nvgImagePattern(ctx, (mSize[0] - size) / 2, (mSize[1] - size) / 2, size,
                         size, 0, appIcon, 1.0f);
@@ -714,6 +715,7 @@ void Viewer::draw(NVGcontext *ctx) {
     nvgRect(ctx, (mSize[0] - size) / 2, (mSize[1] - size) / 2, size, size);
     nvgFillPaint(ctx, imgPaint);
     nvgFill(ctx);
+    */
 
     nvgFontSize(ctx, 32.0f);
     nvgFontFace(ctx, "sans-bold");
