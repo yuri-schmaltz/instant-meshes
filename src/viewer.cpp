@@ -3289,11 +3289,16 @@ void Viewer::loadInput(std::string filename, Float creaseAngle, Float scale,
   if (filename.empty()) {
     filename = nanogui::file_dialog({{"obj", "Wavefront OBJ"},
                                      {"ply", "Stanford PLY"},
-                                     {"aln", "Aligned point cloud"}},
+                                     {"aln", "Aligned point cloud"},
+                                     {"blend", "Blender"},
+                                     {"fbx", "Filmbox"},
+                                     {"dae", "Collada"}},
                                     false);
     if (filename == "")
       return;
-  } else if (extension != ".ply" && extension != ".obj" && extension != ".aln")
+  } else if (extension != ".ply" && extension != ".obj" &&
+             extension != ".aln" && extension != ".blend" &&
+             extension != ".fbx" && extension != ".dae")
     filename = filename + ".ply";
 
   if (!std::isfinite(creaseAngle)) {

@@ -16,8 +16,8 @@
 #include "common.h"
 
 extern void
-load_mesh_or_pointcloud(const std::string &filename, MatrixXu &F,
-                        MatrixXf &V, MatrixXf &N,
+load_mesh_or_pointcloud(const std::string &filename, MatrixXu &F, MatrixXf &V,
+                        MatrixXf &N,
                         const ProgressCallback &progress = ProgressCallback());
 
 extern void load_obj(const std::string &filename, MatrixXu &F, MatrixXf &V,
@@ -31,25 +31,27 @@ extern void
 load_pointcloud(const std::string &filename, MatrixXf &V, MatrixXf &N,
                 const ProgressCallback &progress = ProgressCallback());
 
+extern void
+load_assimp_common(const std::string &filename, MatrixXu &F, MatrixXf &V,
+                   MatrixXf &N,
+                   const ProgressCallback &progress = ProgressCallback());
+
 extern void write_mesh(const std::string &filename, const MatrixXu &F,
-                      const MatrixXf &V,
-                      const MatrixXf &N = MatrixXf(),
-                      const MatrixXf &Nf = MatrixXf(),
-                      const MatrixXf &UV = MatrixXf(),
-                      const MatrixXf &C = MatrixXf(),
-                      const ProgressCallback &progress = ProgressCallback());
+                       const MatrixXf &V, const MatrixXf &N = MatrixXf(),
+                       const MatrixXf &Nf = MatrixXf(),
+                       const MatrixXf &UV = MatrixXf(),
+                       const MatrixXf &C = MatrixXf(),
+                       const ProgressCallback &progress = ProgressCallback());
 
 extern void write_obj(const std::string &filename, const MatrixXu &F,
-                      const MatrixXf &V,
-                      const MatrixXf &N = MatrixXf(),
+                      const MatrixXf &V, const MatrixXf &N = MatrixXf(),
                       const MatrixXf &Nf = MatrixXf(),
                       const MatrixXf &UV = MatrixXf(),
                       const MatrixXf &C = MatrixXf(),
                       const ProgressCallback &progress = ProgressCallback());
 
 extern void write_ply(const std::string &filename, const MatrixXu &F,
-                      const MatrixXf &V,
-                      const MatrixXf &N = MatrixXf(),
+                      const MatrixXf &V, const MatrixXf &N = MatrixXf(),
                       const MatrixXf &Nf = MatrixXf(),
                       const MatrixXf &UV = MatrixXf(),
                       const MatrixXf &C = MatrixXf(),

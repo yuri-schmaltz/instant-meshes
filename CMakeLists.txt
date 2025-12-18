@@ -112,6 +112,8 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/ext/half
   # Resource file
   ${CMAKE_CURRENT_BINARY_DIR}
+  # Assimp
+  ${ASSIMP_INCLUDE_DIRS}
 )
 
 # Run bin2c on resource files
@@ -173,7 +175,9 @@ add_executable(InstantMeshes MACOSX_BUNDLE
   ${EXTRA_SOURCE})
 
 add_definitions(${NANOGUI_EXTRA_DEFS})
-target_link_libraries(InstantMeshes tbb_static nanogui ${NANOGUI_EXTRA_LIBS})
+add_definitions(${NANOGUI_EXTRA_DEFS})
+find_package(Assimp REQUIRED)
+target_link_libraries(InstantMeshes tbb_static nanogui ${NANOGUI_EXTRA_LIBS} ${ASSIMP_LIBRARIES})
 
 set_target_properties(InstantMeshes PROPERTIES OUTPUT_NAME "Instant Meshes")
 
