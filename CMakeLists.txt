@@ -113,7 +113,7 @@ include_directories(
   # Resource file
   ${CMAKE_CURRENT_BINARY_DIR}
   # Assimp
-  # ${ASSIMP_INCLUDE_DIRS}
+  ${ASSIMP_INCLUDE_DIRS}
 )
 
 # Run bin2c on resource files
@@ -176,8 +176,21 @@ add_executable(InstantMeshes MACOSX_BUNDLE
 
 add_definitions(${NANOGUI_EXTRA_DEFS})
 add_definitions(${NANOGUI_EXTRA_DEFS})
-# find_package(Assimp REQUIRED)
-target_link_libraries(InstantMeshes tbb_static nanogui ${NANOGUI_EXTRA_LIBS})
+# Attempt to find Assimp (try lowercase 'assimp' for Config mode support on Linux/Assimp 5.x)
+find_package(assimp QUIET)
+if(assimp_FOUND)
+  set(ASSIMP_FOUND TRUE)
+  if(TARGET assimp::assimp)
+    set(ASSIMP_LIBRARIES assimp::assimp)
+  else()
+    set(ASSIMP_LIBRARIES ${assimp_LIBRARIES})
+  endif()
+  set(ASSIMP_INCLUDE_DIRS ${assimp_INCLUDE_DIRS})
+else()
+  # Fallback to uppercase/Module mode
+  find_package(Assimp REQUIRED)
+endif()
+target_link_libraries(InstantMeshes tbb_static nanogui ${NANOGUI_EXTRA_LIBS} ${ASSIMP_LIBRARIES})
 
 set_target_properties(InstantMeshes PROPERTIES OUTPUT_NAME "Instant Meshes")
 
