@@ -18,9 +18,9 @@
 #if !defined(_WIN32)
 #include <libgen.h>
 #endif
-#include <assimp/Importer.hpp>
-#include <assimp/postprocess.h>
-#include <assimp/scene.h>
+// #include <assimp/Importer.hpp>
+// #include <assimp/postprocess.h>
+// #include <assimp/scene.h>
 
 extern "C" {
 #include "rply.h"
@@ -39,8 +39,8 @@ void load_mesh_or_pointcloud(const std::string &filename, MatrixXu &F,
     load_obj(filename, F, V, progress);
   else if (extension == ".aln")
     load_pointcloud(filename, V, N, progress);
-  else if (extension == ".blend" || extension == ".fbx" || extension == ".dae")
-    load_assimp_common(filename, F, V, N, progress);
+  /* else if (extension == ".blend" || extension == ".fbx" || extension ==
+    ".dae") load_assimp_common(filename, F, V, N, progress); */
   else
     throw std::runtime_error(
         "load_mesh_or_pointcloud: Unknown file extension \"" + extension +
@@ -118,9 +118,11 @@ void load_ply(const std::string &filename, MatrixXu &F, MatrixXf &V,
 
   struct FaceCallbackData {
     MatrixXu &F;
+    uint32_t vertexCount;
     const ProgressCallback &progress;
-    FaceCallbackData(MatrixXu &F, const ProgressCallback &progress)
-        : F(F), progress(progress) {}
+    FaceCallbackData(MatrixXu &F, uint32_t vertexCount,
+                     const ProgressCallback &progress)
+        : F(F), vertexCount(vertexCount), progress(progress) {}
   };
 
   struct VertexNormalCallbackData {
@@ -164,8 +166,12 @@ void load_ply(const std::string &filename, MatrixXu &F, MatrixXf &V,
     ply_get_argument_user_data(argument, (void **)&data, nullptr);
     ply_get_argument_element(argument, nullptr, &index);
 
-    if (value_index >= 0)
-      data->F(value_index, index) = (uint32_t)ply_get_argument_value(argument);
+    if (value_index >= 0) {
+      uint32_t idx = (uint32_t)ply_get_argument_value(argument);
+      if (idx >= data->vertexCount)
+        throw std::runtime_error("PLY file error: Vertex index out of bounds!");
+      data->F(value_index, index) = idx;
+    }
 
     if (data->progress && value_index == 0 && index % 500000 == 0)
       data->progress("Loading face data", index / (Float)data->F.cols());
@@ -174,7 +180,7 @@ void load_ply(const std::string &filename, MatrixXu &F, MatrixXf &V,
   };
 
   VertexCallbackData vcbData(V, progress);
-  FaceCallbackData fcbData(F, progress);
+  FaceCallbackData fcbData(F, (uint32_t)V.cols(), progress);
   VertexNormalCallbackData vncbData(N, progress);
 
   if (!ply_set_read_cb(ply, "vertex", "x", rply_vertex_cb, &vcbData, 0) ||
@@ -481,9 +487,9 @@ void load_obj(const std::string &filename, MatrixXu &F, MatrixXf &V,
        << timeString(timer.value()) << ")" << endl;
 }
 
-void load_assimp_common(const std::string &filename, MatrixXu &F, MatrixXf &V,
-                        MatrixXf &N, const ProgressCallback &progress) {
-  Assimp::Importer importer;
+/* void load_assimp_common(const std::string &filename, MatrixXu &F, MatrixXf
+  &V, MatrixXf &N, const ProgressCallback &progress) { Assimp::Importer
+  importer;
   // Request triangulation and joining of identical vertices
   const aiScene *scene = importer.ReadFile(
       filename, aiProcess_Triangulate | aiProcess_JoinIdenticalVertices |
@@ -532,26 +538,29 @@ void load_assimp_common(const std::string &filename, MatrixXu &F, MatrixXf &V,
         N(0, currentV + i) = mesh->mNormals[i].x;
         N(1, currentV + i) = mesh->mNormals[i].y;
         N(2, currentV + i) = mesh->mNormals[i].z;
-      } else {
-        N.col(currentV + i).setZero();
-      }
-    }
 
-    // Copy Faces (Indices)
-    for (unsigned int i = 0; i < mesh->mNumFaces; i++) {
-      aiFace face = mesh->mFaces[i];
-      // We requested triangulation, so it should be 3
-      if (face.mNumIndices == 3) {
-        F(0, currentF + i) = currentV + face.mIndices[0];
-        F(1, currentF + i) = currentV + face.mIndices[1];
-        F(2, currentF + i) = currentV + face.mIndices[2];
-      }
-    }
+}
+else {
+  N.col(currentV + i).setZero();
+}
+}
 
-    currentV += mesh->mNumVertices;
-    currentF += mesh->mNumFaces;
+// Copy Faces (Indices)
+for (unsigned int i = 0; i < mesh->mNumFaces; i++) {
+  aiFace face = mesh->mFaces[i];
+  // We requested triangulation, so it should be 3
+  if (face.mNumIndices == 3) {
+    F(0, currentF + i) = currentV + face.mIndices[0];
+    F(1, currentF + i) = currentV + face.mIndices[1];
+    F(2, currentF + i) = currentV + face.mIndices[2];
   }
 }
+
+currentV += mesh->mNumVertices;
+currentF += mesh->mNumFaces;
+}
+}
+*/
 
 void load_pointcloud(const std::string &filename, MatrixXf &V, MatrixXf &N,
                      const ProgressCallback &progress) {

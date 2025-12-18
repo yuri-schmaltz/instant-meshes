@@ -54,9 +54,9 @@ elseif(APPLE)
   #string(REGEX REPLACE "^.*X([0-9.]*).sdk$" "\\1" CMAKE_OSX_DEPLOYMENT_TARGET "${CMAKE_OSX_SYSROOT}")
 endif()
 
-# Enable C++11 mode on GCC / Clang
+# Enable C++14 mode on GCC / Clang
 if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++14")
 elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 endif()
@@ -113,7 +113,7 @@ include_directories(
   # Resource file
   ${CMAKE_CURRENT_BINARY_DIR}
   # Assimp
-  ${ASSIMP_INCLUDE_DIRS}
+  # ${ASSIMP_INCLUDE_DIRS}
 )
 
 # Run bin2c on resource files
@@ -176,8 +176,8 @@ add_executable(InstantMeshes MACOSX_BUNDLE
 
 add_definitions(${NANOGUI_EXTRA_DEFS})
 add_definitions(${NANOGUI_EXTRA_DEFS})
-find_package(Assimp REQUIRED)
-target_link_libraries(InstantMeshes tbb_static nanogui ${NANOGUI_EXTRA_LIBS} ${ASSIMP_LIBRARIES})
+# find_package(Assimp REQUIRED)
+target_link_libraries(InstantMeshes tbb_static nanogui ${NANOGUI_EXTRA_LIBS})
 
 set_target_properties(InstantMeshes PROPERTIES OUTPUT_NAME "Instant Meshes")
 

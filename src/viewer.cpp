@@ -718,7 +718,7 @@ void Viewer::draw(NVGcontext *ctx) {
     nvgFontSize(ctx, 32.0f);
     nvgFontFace(ctx, "sans-bold");
     nvgTextAlign(ctx, NVG_ALIGN_CENTER | NVG_ALIGN_TOP);
-    nvgFillColor(ctx, nvgColor(1.0f, 1.0f, 1.0f, 0.5f));
+    nvgFillColor(ctx, nvgRGBAf(1.0f, 1.0f, 1.0f, 0.5f));
     nvgText(ctx, mSize[0] / 2, (mSize[1] + size) / 2 + 20,
             "Drag & Drop a Mesh or Click 'Open'", NULL);
   }
@@ -2066,7 +2066,7 @@ void Viewer::saveState(std::string filename) {
     if (filename == "")
       return;
   }
-  std::lock_guard<ordered_lock> lock(mRes.mutex());
+  std::shared_lock<ordered_lock> lock(mRes.mutex());
 
   try {
     GUISerializer state;
@@ -2489,7 +2489,7 @@ void Viewer::drawContents() {
 #ifdef VISUALIZE_ERROR
   static int lastUpdate = -1;
   if (lastUpdate != mRes.iterationsQ() + mRes.iterationsO()) {
-    std::lock_guard<ordered_lock> lock(mRes.mutex());
+    std::shared_lock<ordered_lock> lock(mRes.mutex());
     VectorXf error = mOptimizer.error();
     char header[20], footer[20];
     memset(header, 0, 20);

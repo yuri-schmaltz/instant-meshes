@@ -1,0 +1,176 @@
+[ 34%] Built target tbb_static
+[ 36%] Built target bin2c
+[ 50%] Built target glfw_objects
+[ 77%] Built target nanogui-obj
+[ 78%] Built target nanogui
+[ 79%] Building CXX object CMakeFiles/InstantMeshes.dir/src/meshio.cpp.o
+In file included from /home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/Core:276,
+                 from /home/yurix/Documentos/instant-meshes/src/common.h:23,
+                 from /home/yurix/Documentos/instant-meshes/src/meshio.h:16,
+                 from /home/yurix/Documentos/instant-meshes/src/meshio.cpp:14:
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/Functors.h:973:28: warning: ‘template<class _Operation> class std::binder2nd’ is deprecated: use 'std::bind' instead [-Wdeprecated-declarations]
+  973 | struct functor_traits<std::binder2nd<T> >
+      |                            ^~~~~~~~~
+In file included from /usr/include/c++/13/bits/stl_function.h:1438,
+                 from /usr/include/c++/13/string:49,
+                 from /usr/include/c++/13/bits/locale_classes.h:40,
+                 from /usr/include/c++/13/bits/ios_base.h:41,
+                 from /usr/include/c++/13/ios:44,
+                 from /usr/include/c++/13/ostream:40,
+                 from /usr/include/c++/13/iostream:41,
+                 from /home/yurix/Documentos/instant-meshes/src/log.h:7,
+                 from /home/yurix/Documentos/instant-meshes/src/common.h:22:
+/usr/include/c++/13/backward/binders.h:144:11: note: declared here
+  144 |     class binder2nd
+      |           ^~~~~~~~~
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/Functors.h:977:28: warning: ‘template<class _Operation> class std::binder1st’ is deprecated: use 'std::bind' instead [-Wdeprecated-declarations]
+  977 | struct functor_traits<std::binder1st<T> >
+      |                            ^~~~~~~~~
+/usr/include/c++/13/backward/binders.h:108:11: note: declared here
+  108 |     class binder1st
+      |           ^~~~~~~~~
+In file included from /home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/Core:326:
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/products/GeneralBlockPanelKernel.h: In member function ‘void Eigen::internal::gebp_kernel<LhsScalar, RhsScalar, Index, mr, nr, ConjugateLhs, ConjugateRhs>::operator()(ResScalar*, Index, const LhsScalar*, const RhsScalar*, Index, Index, Index, ResScalar, Index, Index, Index, Index, RhsScalar*)’:
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/products/GeneralBlockPanelKernel.h:574:9: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+  574 |         if(nr==4) traits.initAcc(C3);
+      |         ^~
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/products/GeneralBlockPanelKernel.h:575:19: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+  575 |                   traits.initAcc(C4);
+      |                   ^~~~~~
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/products/GeneralBlockPanelKernel.h:946:9: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+  946 |         if(nr==4) R3 = ploadu<ResPacket>(r3);
+      |         ^~
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/products/GeneralBlockPanelKernel.h:948:19: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+  948 |                   traits.acc(C0, alphav, R0);
+      |                   ^~~~~~
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/products/GeneralBlockPanelKernel.h:951:9: warning: this ‘if’ clause does not guard... [-Wmisleading-indentation]
+  951 |         if(nr==4) traits.acc(C3, alphav, R3);
+      |         ^~
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/products/GeneralBlockPanelKernel.h:953:19: note: ...this statement, but the latter is misleadingly indented as if it were guarded by the ‘if’
+  953 |                   pstoreu(r0, R0);
+      |                   ^~~~~~~
+In file included from /home/yurix/Documentos/instant-meshes/ext/tbb/include/tbb/tbb.h:42,
+                 from /home/yurix/Documentos/instant-meshes/src/common.h:33:
+/home/yurix/Documentos/instant-meshes/ext/tbb/include/tbb/concurrent_hash_map.h: In constructor ‘tbb::interface5::internal::hash_map_base::hash_map_base()’:
+/home/yurix/Documentos/instant-meshes/ext/tbb/include/tbb/concurrent_hash_map.h:133:24: warning: ‘void* memset(void*, int, size_t)’ clearing an object of type ‘class tbb::interface5::internal::hash_map_base’ with no trivial copy-assignment; use value-initialization instead [-Wclass-memaccess]
+  133 |             std::memset( this, 0, pointers_per_table*sizeof(segment_ptr_t) // 32*4=128   or 64*8=512
+      |             ~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  134 |                 + sizeof(my_size) + sizeof(my_mask)  // 4+4 or 8+8
+      |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  135 |                 + embedded_buckets*sizeof(bucket) ); // n*8 or n*16
+      |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/yurix/Documentos/instant-meshes/ext/tbb/include/tbb/concurrent_hash_map.h:87:11: note: ‘class tbb::interface5::internal::hash_map_base’ declared here
+   87 |     class hash_map_base {
+      |           ^~~~~~~~~~~~~
+/home/yurix/Documentos/instant-meshes/ext/tbb/include/tbb/concurrent_hash_map.h: In static member function ‘static void tbb::interface5::internal::hash_map_base::init_buckets(segment_ptr_t, size_type, bool)’:
+/home/yurix/Documentos/instant-meshes/ext/tbb/include/tbb/concurrent_hash_map.h:169:41: warning: ‘void* memset(void*, int, size_t)’ clearing an object of type ‘struct tbb::interface5::internal::hash_map_base::bucket’ with no trivial copy-assignment; use value-initialization instead [-Wclass-memaccess]
+  169 |             if( is_initial ) std::memset(ptr, 0, sz*sizeof(bucket) );
+      |                              ~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/yurix/Documentos/instant-meshes/ext/tbb/include/tbb/concurrent_hash_map.h:98:16: note: ‘struct tbb::interface5::internal::hash_map_base::bucket’ declared here
+   98 |         struct bucket : tbb::internal::no_copy {
+      |                ^~~~~~
+In file included from /home/yurix/Documentos/instant-meshes/ext/tbb/include/tbb/tbb.h:48:
+/home/yurix/Documentos/instant-meshes/ext/tbb/include/tbb/concurrent_unordered_map.h: At global scope:
+/home/yurix/Documentos/instant-meshes/ext/tbb/include/tbb/concurrent_unordered_map.h:48:39: warning: ‘template<class _Arg1, class _Arg2, class _Result> struct std::binary_function’ is deprecated [-Wdeprecated-declarations]
+   48 |     class value_compare : public std::binary_function<value_type, value_type, bool>
+      |                                       ^~~~~~~~~~~~~~~
+/usr/include/c++/13/bits/stl_function.h:131:12: note: declared here
+  131 |     struct binary_function
+      |            ^~~~~~~~~~~~~~~
+/home/yurix/Documentos/instant-meshes/src/meshio.cpp: In function ‘void load_obj(const std::string&, MatrixXu&, MatrixXf&, const ProgressCallback&)’:
+/home/yurix/Documentos/instant-meshes/src/meshio.cpp:399:32: warning: ‘template<class _Arg, class _Result> struct std::unary_function’ is deprecated [-Wdeprecated-declarations]
+  399 |   struct obj_vertexHash : std::unary_function<obj_vertex, size_t> {
+      |                                ^~~~~~~~~~~~~~
+/usr/include/c++/13/bits/stl_function.h:117:12: note: declared here
+  117 |     struct unary_function
+      |            ^~~~~~~~~~~~~~
+/home/yurix/Documentos/instant-meshes/src/meshio.cpp: At global scope:
+/home/yurix/Documentos/instant-meshes/src/meshio.cpp:543:1: error: expected unqualified-id before ‘}’ token
+  543 | }
+      | ^
+/home/yurix/Documentos/instant-meshes/src/meshio.cpp:543:1: error: expected declaration before ‘}’ token
+/home/yurix/Documentos/instant-meshes/src/meshio.cpp:544:1: error: expected unqualified-id before ‘else’
+  544 | else {
+      | ^~~~
+/home/yurix/Documentos/instant-meshes/src/meshio.cpp:547:1: error: expected declaration before ‘}’ token
+  547 | }
+      | ^
+/home/yurix/Documentos/instant-meshes/src/meshio.cpp:550:1: error: expected unqualified-id before ‘for’
+  550 | for (unsigned int i = 0; i < mesh->mNumFaces; i++) {
+      | ^~~
+/home/yurix/Documentos/instant-meshes/src/meshio.cpp:550:26: error: ‘i’ does not name a type
+  550 | for (unsigned int i = 0; i < mesh->mNumFaces; i++) {
+      |                          ^
+/home/yurix/Documentos/instant-meshes/src/meshio.cpp:550:47: error: ‘i’ does not name a type
+  550 | for (unsigned int i = 0; i < mesh->mNumFaces; i++) {
+      |                                               ^
+/home/yurix/Documentos/instant-meshes/src/meshio.cpp:560:1: error: ‘currentV’ does not name a type
+  560 | currentV += mesh->mNumVertices;
+      | ^~~~~~~~
+/home/yurix/Documentos/instant-meshes/src/meshio.cpp:561:1: error: ‘currentF’ does not name a type
+  561 | currentF += mesh->mNumFaces;
+      | ^~~~~~~~
+/home/yurix/Documentos/instant-meshes/src/meshio.cpp:562:1: error: expected declaration before ‘}’ token
+  562 | }
+      | ^
+/home/yurix/Documentos/instant-meshes/src/meshio.cpp:563:1: error: expected declaration before ‘}’ token
+  563 | }
+      | ^
+/home/yurix/Documentos/instant-meshes/src/meshio.cpp:564:2: error: expected unqualified-id before ‘/’ token
+  564 | */
+      |  ^
+In file included from /home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/Core:284:
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/Assign.h: In instantiation of ‘struct Eigen::internal::assign_traits<Eigen::Block<Eigen::Matrix<float, -1, -1>, -1, 1, true>, Eigen::Matrix<float, 3, 1> >’:
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/Assign.h:506:116:   required from ‘Derived& Eigen::DenseBase<Derived>::lazyAssign(const Eigen::DenseBase<OtherDerived>&) [with OtherDerived = Eigen::Matrix<float, 3, 1>; Derived = Eigen::Block<Eigen::Matrix<float, -1, -1>, -1, 1, true>]’
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/Assign.h:527:107:   required from ‘static Derived& Eigen::internal::assign_selector<Derived, OtherDerived, false, false>::run(Derived&, const OtherDerived&) [with Derived = Eigen::Block<Eigen::Matrix<float, -1, -1>, -1, 1, true>; OtherDerived = Eigen::Matrix<float, 3, 1>]’
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/Assign.h:571:62:   required from ‘Derived& Eigen::MatrixBase<Derived>::operator=(const Eigen::DenseBase<OtherDerived>&) [with OtherDerived = Eigen::Matrix<float, 3, 1>; Derived = Eigen::Block<Eigen::Matrix<float, -1, -1>, -1, 1, true>]’
+/home/yurix/Documentos/instant-meshes/src/meshio.cpp:484:46:   required from here
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/Assign.h:53:57: warning: enum constant in boolean context [-Wint-in-bool-context]
+   53 |     MayLinearVectorize = MightVectorize && MayLinearize && DstHasDirectAccess
+      |                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/Assign.h:57:41: warning: enum constant in boolean context [-Wint-in-bool-context]
+   57 |     MaySliceVectorize  = MightVectorize && DstHasDirectAccess
+      |                          ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/Assign.h: In instantiation of ‘struct Eigen::internal::assign_traits<Eigen::Matrix<float, 3, 1>, Eigen::CwiseNullaryOp<Eigen::internal::scalar_constant_op<float>, Eigen::Matrix<float, 3, 1> > >’:
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/Assign.h:506:116:   required from ‘Derived& Eigen::DenseBase<Derived>::lazyAssign(const Eigen::DenseBase<OtherDerived>&) [with OtherDerived = Eigen::CwiseNullaryOp<Eigen::internal::scalar_constant_op<float>, Eigen::Matrix<float, 3, 1> >; Derived = Eigen::Matrix<float, 3, 1>]’
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/PlainObjectBase.h:414:30:   required from ‘Derived& Eigen::PlainObjectBase<Derived>::lazyAssign(const Eigen::DenseBase<OtherDerived>&) [with OtherDerived = Eigen::CwiseNullaryOp<Eigen::internal::scalar_constant_op<float>, Eigen::Matrix<float, 3, 1> >; Derived = Eigen::Matrix<float, 3, 1>]’
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/Assign.h:527:107:   required from ‘static Derived& Eigen::internal::assign_selector<Derived, OtherDerived, false, false>::run(Derived&, const OtherDerived&) [with Derived = Eigen::Matrix<float, 3, 1>; OtherDerived = Eigen::CwiseNullaryOp<Eigen::internal::scalar_constant_op<float>, Eigen::Matrix<float, 3, 1> >]’
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/PlainObjectBase.h:653:72:   required from ‘Derived& Eigen::PlainObjectBase<Derived>::_set_noalias(const Eigen::DenseBase<OtherDerived>&) [with OtherDerived = Eigen::CwiseNullaryOp<Eigen::internal::scalar_constant_op<float>, Eigen::Matrix<float, 3, 1> >; Derived = Eigen::Matrix<float, 3, 1>]’
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/Matrix.h:296:25:   required from ‘Eigen::Matrix<_Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>::Matrix(const Eigen::MatrixBase<OtherDerived>&) [with OtherDerived = Eigen::CwiseNullaryOp<Eigen::internal::scalar_constant_op<float>, Eigen::Matrix<float, 3, 1> >; _Scalar = float; int _Rows = 3; int _Cols = 1; int _Options = 0; int _MaxRows = 3; int _MaxCols = 1]’
+/home/yurix/Documentos/instant-meshes/src/common.h:360:30:   required from here
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/Assign.h:53:57: warning: enum constant in boolean context [-Wint-in-bool-context]
+   53 |     MayLinearVectorize = MightVectorize && MayLinearize && DstHasDirectAccess
+      |                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/Assign.h:57:41: warning: enum constant in boolean context [-Wint-in-bool-context]
+   57 |     MaySliceVectorize  = MightVectorize && DstHasDirectAccess
+      |                          ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/Assign.h: In instantiation of ‘struct Eigen::internal::assign_traits<Eigen::Matrix<float, 3, 1>, Eigen::Matrix<float, 3, 1> >’:
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/Assign.h:506:116:   required from ‘Derived& Eigen::DenseBase<Derived>::lazyAssign(const Eigen::DenseBase<OtherDerived>&) [with OtherDerived = Eigen::Matrix<float, 3, 1>; Derived = Eigen::Matrix<float, 3, 1>]’
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/PlainObjectBase.h:414:30:   required from ‘Derived& Eigen::PlainObjectBase<Derived>::lazyAssign(const Eigen::DenseBase<OtherDerived>&) [with OtherDerived = Eigen::Matrix<float, 3, 1>; Derived = Eigen::Matrix<float, 3, 1>]’
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/Assign.h:527:107:   required from ‘static Derived& Eigen::internal::assign_selector<Derived, OtherDerived, false, false>::run(Derived&, const OtherDerived&) [with Derived = Eigen::Matrix<float, 3, 1>; OtherDerived = Eigen::Matrix<float, 3, 1>]’
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/PlainObjectBase.h:653:72:   required from ‘Derived& Eigen::PlainObjectBase<Derived>::_set_noalias(const Eigen::DenseBase<OtherDerived>&) [with OtherDerived = Eigen::Matrix<float, 3, 1>; Derived = Eigen::Matrix<float, 3, 1>]’
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/Matrix.h:220:27:   required from ‘Eigen::Matrix<_Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>::Matrix(Eigen::Matrix<_Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>&&) [with _Scalar = float; int _Rows = 3; int _Cols = 1; int _Options = 0; int _MaxRows = 3; int _MaxCols = 1]’
+/home/yurix/Documentos/instant-meshes/src/common.h:360:30:   required from here
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/Assign.h:53:57: warning: enum constant in boolean context [-Wint-in-bool-context]
+   53 |     MayLinearVectorize = MightVectorize && MayLinearize && DstHasDirectAccess
+      |                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/Assign.h:57:41: warning: enum constant in boolean context [-Wint-in-bool-context]
+   57 |     MaySliceVectorize  = MightVectorize && DstHasDirectAccess
+      |                          ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/Assign.h: In instantiation of ‘struct Eigen::internal::assign_traits<Eigen::SwapWrapper<Eigen::Matrix<float, 3, 1> >, Eigen::Matrix<float, 3, 1> >’:
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/Assign.h:506:116:   required from ‘Derived& Eigen::DenseBase<Derived>::lazyAssign(const Eigen::DenseBase<OtherDerived>&) [with OtherDerived = Eigen::Matrix<float, 3, 1>; Derived = Eigen::SwapWrapper<Eigen::Matrix<float, 3, 1> >]’
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/DenseBase.h:384:49:   required from ‘void Eigen::DenseBase<Derived>::swap(Eigen::PlainObjectBase<OtherDerived>&) [with OtherDerived = Eigen::Matrix<float, 3, 1>; Derived = Eigen::Matrix<float, 3, 1>]’
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/PlainObjectBase.h:805:18:   required from ‘static void Eigen::internal::matrix_swap_impl<MatrixTypeA, MatrixTypeB, SwapPointers>::run(MatrixTypeA&, MatrixTypeB&) [with MatrixTypeA = Eigen::Matrix<float, 3, 1>; MatrixTypeB = Eigen::Matrix<float, 3, 1>; bool SwapPointers = false]’
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/PlainObjectBase.h:682:81:   required from ‘void Eigen::PlainObjectBase<Derived>::_swap(const Eigen::DenseBase<OtherDerived>&) [with OtherDerived = Eigen::Matrix<float, 3, 1>; Derived = Eigen::Matrix<float, 3, 1>]’
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/Matrix.h:334:18:   required from ‘void Eigen::Matrix<_Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>::swap(const Eigen::MatrixBase<OtherDerived>&) [with OtherDerived = Eigen::Matrix<float, 3, 1>; _Scalar = float; int _Rows = 3; int _Cols = 1; int _Options = 0; int _MaxRows = 3; int _MaxCols = 1]’
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/Matrix.h:224:17:   required from ‘Eigen::Matrix<_Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>& Eigen::Matrix<_Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>::operator=(Eigen::Matrix<_Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>&&) [with _Scalar = float; int _Rows = 3; int _Cols = 1; int _Options = 0; int _MaxRows = 3; int _MaxCols = 1]’
+/home/yurix/Documentos/instant-meshes/src/common.h:258:55:   required from here
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/Assign.h:53:57: warning: enum constant in boolean context [-Wint-in-bool-context]
+   53 |     MayLinearVectorize = MightVectorize && MayLinearize && DstHasDirectAccess
+      |                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~
+/home/yurix/Documentos/instant-meshes/ext/nanogui/ext/eigen/Eigen/src/Core/Assign.h:57:41: warning: enum constant in boolean context [-Wint-in-bool-context]
+   57 |     MaySliceVectorize  = MightVectorize && DstHasDirectAccess
+      |                          ~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~
+make[2]: *** [CMakeFiles/InstantMeshes.dir/build.make:162: CMakeFiles/InstantMeshes.dir/src/meshio.cpp.o] Erro 1
+make[1]: *** [CMakeFiles/Makefile2:159: CMakeFiles/InstantMeshes.dir/all] Erro 2
+make: *** [Makefile:136: all] Erro 2
