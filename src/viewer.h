@@ -236,6 +236,9 @@ protected:
   std::function<void(const std::string &, Float)> mProgress;
   Window *mProgressWindow;
   Window *mToolWindow;
+  Window *mLogWindow;
+  VScrollPanel *mLogScroll;
+  Widget *mLogContainer;
   ProgressBar *mProgressBar;
   Label *mProgressLabel;
   tbb::spin_mutex mProgressMutex;

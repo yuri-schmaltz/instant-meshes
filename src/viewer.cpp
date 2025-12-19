@@ -677,6 +677,18 @@ Viewer::Viewer(bool fullscreen, bool deterministic)
   mOperationStart = mLastProgressMessage = glfwGetTime();
   glfwSetWindowTitle(mGLFWWindow, "Instant Meshes");
   resetState();
+
+  /* Initialize Log Panel */
+  mLogWindow = new Window(this, "Application Logs");
+  mLogWindow->setLayout(new GroupLayout());
+
+  mLogScroll = new VScrollPanel(mLogWindow);
+
+  mLogContainer = new Widget(mLogScroll);
+  mLogContainer->setLayout(
+      new BoxLayout(Orientation::Vertical, Alignment::Minimum, 0, 2));
+
+  new Label(mLogContainer, "System initialized.", "sans-mono");
 }
 
 Viewer::~Viewer() {
@@ -746,6 +758,17 @@ void Viewer::draw(NVGcontext *ctx) {
     mToolWindow->setPosition(Vector2i(0, 0));
     mToolWindow->setHeight(mSize.y());
   }
+
+  if (mLogWindow) {
+    int logWidth = 300; // Fixed width for log panel
+    mLogWindow->setPosition(Vector2i(mSize.x() - logWidth, 0));
+    mLogWindow->setFixedWidth(logWidth);
+    mLogWindow->setHeight(mSize.y());
+    if (mLogScroll)
+      mLogScroll->setFixedHeight(mSize.y() -
+                                 40); // Adjust for window header/padding
+  }
+
   Screen::draw(ctx);
 }
 
