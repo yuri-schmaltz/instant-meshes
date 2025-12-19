@@ -3352,7 +3352,7 @@ bool Viewer::mouseButtonEvent(const Vector2i &p, int button, bool down,
 
 void Viewer::loadInput(std::string filename, Float creaseAngle, Float scale,
                        int face_count, int vertex_count, int rosy, int posy,
-                       int knn_points) {
+                       int knn_points, int meshIndex, bool validateMultiMesh) {
   std::string extension;
   if (filename.size() > 4)
     extension = str_tolower(filename.substr(filename.size() - 4));
@@ -3391,7 +3391,53 @@ void Viewer::loadInput(std::string filename, Float creaseAngle, Float scale,
   glfwMakeContextCurrent(nullptr);
 
   try {
-    load_mesh_or_pointcloud(filename, F, V, N, mProgress);
+    load_mesh_or_pointcloud(filename, F, V, N, meshIndex, validateMultiMesh,
+                            mProgress);
+  } catch (const MultiMeshException &e) {
+    glfwMakeContextCurrent(mGLFWWindow);
+    mProcessEvents = true;
+
+    Window *selectWin = new Window(this, "Select Mesh");
+    selectWin->setLayout(new GroupLayout());
+    selectWin->setFixedWidth(300);
+
+    // Center the window roughly
+    selectWin->setPosition(
+        Vector2i((mSize.x() - 300) / 2, (mSize.y() - 400) / 2));
+
+    VScrollPanel *scroll = new VScrollPanel(selectWin);
+    scroll->setFixedHeight(std::min(400, (int)e.meshes.size() * 30 + 50));
+
+    Widget *content = new Widget(scroll);
+    content->setLayout(new BoxLayout(Orientation::Vertical, Alignment::Fill));
+
+    for (auto const &[index, name] : e.meshes) {
+      Button *b = new Button(content, name);
+      b->setCallback([this, filename, creaseAngle, scale, face_count,
+                      vertex_count, rosy, posy, knn_points, index,
+                      selectWin]() {
+        selectWin->dispose();
+        loadInput(filename, creaseAngle, scale, face_count, vertex_count, rosy,
+                  posy, knn_points, index, false);
+      });
+    }
+
+    new Label(selectWin, "Options");
+    Button *mergeBtn = new Button(selectWin, "Merge All Meshes");
+    mergeBtn->setBackgroundColor(Theme::blueBtn());
+    mergeBtn->setTextColor(Color(255, 255));
+    mergeBtn->setCallback([this, filename, creaseAngle, scale, face_count,
+                           vertex_count, rosy, posy, knn_points, selectWin]() {
+      selectWin->dispose();
+      loadInput(filename, creaseAngle, scale, face_count, vertex_count, rosy,
+                posy, knn_points, -1, false);
+    });
+
+    Button *cancelBtn = new Button(selectWin, "Cancel");
+    cancelBtn->setCallback([selectWin]() { selectWin->dispose(); });
+
+    performLayout(mNVGContext);
+    return;
   } catch (const std::exception &e) {
     new MessageDialog(this, MessageDialog::Type::Warning, "Error", e.what());
     glfwMakeContextCurrent(mGLFWWindow);

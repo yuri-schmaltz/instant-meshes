@@ -74,7 +74,8 @@ public:
   void loadInput(std::string filename,
                  Float creaseAngle = std::numeric_limits<Float>::infinity(),
                  Float scale = -1, int face_count = -1, int vertex_count = -1,
-                 int rosy = 4, int posy = 4, int knn_points = 10);
+                 int rosy = 4, int posy = 4, int knn_points = 10,
+                 int meshIndex = -1, bool validateMultiMesh = true);
 
   void setSymmetry(int rosy, int posy);
   void setExtrinsic(bool extrinsic);

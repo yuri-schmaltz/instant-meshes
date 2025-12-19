@@ -27,7 +27,8 @@ extern "C" {
 }
 
 void load_mesh_or_pointcloud(const std::string &filename, MatrixXu &F,
-                             MatrixXf &V, MatrixXf &N,
+                             MatrixXf &V, MatrixXf &N, int meshIndex,
+                             bool validateMultiMesh,
                              const ProgressCallback &progress) {
   std::string extension;
   if (filename.size() > 4)
@@ -40,7 +41,8 @@ void load_mesh_or_pointcloud(const std::string &filename, MatrixXu &F,
   else if (extension == ".aln")
     load_pointcloud(filename, V, N, progress);
   else if (extension == ".blend" || extension == ".fbx" || extension == ".dae")
-    load_assimp_common(filename, F, V, N, progress);
+    load_assimp_common(filename, F, V, N, meshIndex, validateMultiMesh,
+                       progress);
   else
     throw std::runtime_error(
         "load_mesh_or_pointcloud: Unknown file extension \"" + extension +
@@ -488,7 +490,8 @@ void load_obj(const std::string &filename, MatrixXu &F, MatrixXf &V,
 }
 
 void load_assimp_common(const std::string &filename, MatrixXu &F, MatrixXf &V,
-                        MatrixXf &N, const ProgressCallback &progress) {
+                        MatrixXf &N, int meshIndex, bool validateMultiMesh,
+                        const ProgressCallback &progress) {
   Assimp::Importer importer;
   // Request triangulation and joining of identical vertices
   const aiScene *scene = importer.ReadFile(
@@ -506,14 +509,26 @@ void load_assimp_common(const std::string &filename, MatrixXu &F, MatrixXf &V,
     throw std::runtime_error("File has no meshes: " + filename);
   }
 
+  // Validation Check
+  if (validateMultiMesh && scene->mNumMeshes > 1) {
+    std::map<int, std::string> meshes;
+    for (unsigned int i = 0; i < scene->mNumMeshes; i++) {
+      std::string name = scene->mMeshes[i]->mName.C_Str();
+      if (name.empty())
+        name = "Mesh " + std::to_string(i);
+      meshes[i] = name;
+    }
+    throw MultiMeshException(filename, meshes);
+  }
+
   // Count total vertices and faces to pre-allocate
   uint32_t totalV = 0;
   uint32_t totalF = 0;
 
-  // We only process the first mesh merge or all meshes?
-  // Instant meshes usually expects a single connected mesh.
-  // Let's merge all meshes in the scene into one standard matrix.
   for (unsigned int i = 0; i < scene->mNumMeshes; i++) {
+    if (meshIndex >= 0 && (int)i != meshIndex)
+      continue;
+
     totalV += scene->mMeshes[i]->mNumVertices;
     totalF += scene->mMeshes[i]->mNumFaces;
   }
@@ -526,6 +541,9 @@ void load_assimp_common(const std::string &filename, MatrixXu &F, MatrixXf &V,
   uint32_t currentF = 0;
 
   for (unsigned int m = 0; m < scene->mNumMeshes; m++) {
+    if (meshIndex >= 0 && (int)m != meshIndex)
+      continue;
+
     aiMesh *mesh = scene->mMeshes[m];
 
     // Copy Vertices

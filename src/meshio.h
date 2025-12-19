@@ -14,10 +14,13 @@
 #pragma once
 
 #include "common.h"
+#include <exception>
+#include <map>
 
 extern void
 load_mesh_or_pointcloud(const std::string &filename, MatrixXu &F, MatrixXf &V,
-                        MatrixXf &N,
+                        MatrixXf &N, int meshIndex = -1,
+                        bool validateMultiMesh = true,
                         const ProgressCallback &progress = ProgressCallback());
 
 extern void load_obj(const std::string &filename, MatrixXu &F, MatrixXf &V,
@@ -31,9 +34,20 @@ extern void
 load_pointcloud(const std::string &filename, MatrixXf &V, MatrixXf &N,
                 const ProgressCallback &progress = ProgressCallback());
 
+struct MultiMeshException : public std::exception {
+  std::string filename;
+  std::map<int, std::string> meshes;
+  MultiMeshException(const std::string &f, const std::map<int, std::string> &m)
+      : filename(f), meshes(m) {}
+  const char *what() const noexcept override {
+    return "Multiple meshes detected";
+  }
+};
+
 extern void
 load_assimp_common(const std::string &filename, MatrixXu &F, MatrixXf &V,
-                   MatrixXf &N,
+                   MatrixXf &N, int meshIndex = -1,
+                   bool validateMultiMesh = false,
                    const ProgressCallback &progress = ProgressCallback());
 
 extern void write_mesh(const std::string &filename, const MatrixXu &F,
