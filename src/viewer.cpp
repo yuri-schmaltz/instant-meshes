@@ -766,7 +766,7 @@ Viewer::~Viewer() {
 
 void Viewer::draw(NVGcontext *ctx) {
   if (mRes.levels() == 0) {
-    int appIcon = nvgImageIcon(ctx, instantmeshes);
+    // int appIcon = nvgImageIcon(ctx, instantmeshes);
     int size = mSize.norm() / 2;
 
     /*
@@ -783,7 +783,7 @@ void Viewer::draw(NVGcontext *ctx) {
     nvgFontFace(ctx, "sans-bold");
     nvgTextAlign(ctx, NVG_ALIGN_CENTER | NVG_ALIGN_TOP);
     nvgFillColor(ctx, nvgRGBAf(1.0f, 1.0f, 1.0f, 0.5f));
-    nvgText(ctx, mSize[0] / 2, (mSize[1] + size) / 2 + 20,
+    nvgText(ctx, (float)mSize[0] / 2, ((float)(mSize[1] + size)) / 2 + 20,
             "Drag & Drop a Mesh or Click 'Open'", NULL);
   }
 
@@ -3426,7 +3426,9 @@ void Viewer::loadInput(std::string filename, Float creaseAngle, Float scale,
     Widget *content = new Widget(scroll);
     content->setLayout(new BoxLayout(Orientation::Vertical, Alignment::Fill));
 
-    for (auto const &[index, name] : e.meshes) {
+    for (auto const &pair : e.meshes) {
+      int index = pair.first;
+      std::string name = pair.second;
       Button *b = new Button(content, name);
       b->setCallback([this, filename, creaseAngle, scale, face_count,
                       vertex_count, rosy, posy, knn_points, index,
