@@ -103,8 +103,6 @@ protected:
 
   void refreshStrokes();
 
-  void appendLog(const std::string &message, int type = 0);
-
   void showProgress(const std::string &caption, Float value);
 
   void computeCameraMatrices(Eigen::Matrix4f &model, Eigen::Matrix4f &view,
@@ -199,11 +197,6 @@ protected:
   bool mNeedsRepaint;
   uint32_t mDrawIndex;
 
-  /* Status Bar */
-  Window *mStatusWindow;
-  Label *mStatusLabel;
-  ProgressBar *mStatusProgressBar;
-
   /* GUI-related */
   enum Layers {
     InputMesh,
@@ -244,9 +237,6 @@ protected:
   std::function<void(const std::string &, Float)> mProgress;
   Window *mProgressWindow;
   Window *mToolWindow;
-  Window *mLogWindow;
-  VScrollPanel *mLogScroll;
-  Widget *mLogContainer;
   ProgressBar *mProgressBar;
   Label *mProgressLabel;
   tbb::spin_mutex mProgressMutex;
