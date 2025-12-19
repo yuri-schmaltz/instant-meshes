@@ -31,8 +31,9 @@ void load_mesh_or_pointcloud(const std::string &filename, MatrixXu &F,
                              bool validateMultiMesh,
                              const ProgressCallback &progress) {
   std::string extension;
-  if (filename.size() > 4)
-    extension = str_tolower(filename.substr(filename.size() - 4));
+  size_t last_dot = filename.find_last_of('.');
+  if (last_dot != std::string::npos)
+    extension = str_tolower(filename.substr(last_dot));
 
   if (extension == ".ply")
     load_ply(filename, F, V, N, false, progress);
@@ -700,12 +701,12 @@ void write_obj(const std::string &filename, const MatrixXu &F,
   /* Check for irregular faces */
   std::map<uint32_t, std::pair<uint32_t, std::map<uint32_t, uint32_t>>>
       irregular;
-  size_t nIrregular = 0;
+  // size_t nIrregular = 0;
 
   for (uint32_t f = 0; f < F.cols(); ++f) {
     if (F.rows() == 4) {
       if (F(2, f) == F(3, f)) {
-        nIrregular++;
+        // nIrregular++;
         auto &value = irregular[F(2, f)];
         value.first = f;
         value.second[F(0, f)] = F(1, f);

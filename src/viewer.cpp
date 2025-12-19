@@ -3369,8 +3369,9 @@ void Viewer::loadInput(std::string filename, Float creaseAngle, Float scale,
                        int face_count, int vertex_count, int rosy, int posy,
                        int knn_points, int meshIndex, bool validateMultiMesh) {
   std::string extension;
-  if (filename.size() > 4)
-    extension = str_tolower(filename.substr(filename.size() - 4));
+  size_t last_dot = filename.find_last_of('.');
+  if (last_dot != std::string::npos)
+    extension = str_tolower(filename.substr(last_dot));
 
   if (filename.empty()) {
     filename = nanogui::file_dialog({{"obj", "Wavefront OBJ"},
