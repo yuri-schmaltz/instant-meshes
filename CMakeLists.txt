@@ -1,6 +1,10 @@
 cmake_minimum_required (VERSION 3.5)
 project(InstantMeshes)
 
+# Suppress deprecation warnings from external dependencies (nanogui, glfw, tbb)
+# This avoids modifying submodule files which would break git synchronization.
+set(CMAKE_WARN_DEPRECATED OFF CACHE BOOL "" FORCE)
+
 option(INSTANT_MESHES_DEV_MODE "Instant meshes developer mode" OFF)
 
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
