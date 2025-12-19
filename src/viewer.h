@@ -235,6 +235,7 @@ protected:
   /* Progress display */
   std::function<void(const std::string &, Float)> mProgress;
   Window *mProgressWindow;
+  Window *mToolWindow;
   ProgressBar *mProgressBar;
   Label *mProgressLabel;
   tbb::spin_mutex mProgressMutex;

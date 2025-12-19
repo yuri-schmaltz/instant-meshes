@@ -144,7 +144,8 @@ Viewer::Viewer(bool fullscreen, bool deterministic)
                         std::make_pair(nvgImageIcon(ctx, loadmesh), ""));
 
   /* Initialize user interface */
-  Window *window = new Window(this, "Instant Meshes");
+  mToolWindow = new Window(this, "Instant Meshes");
+  Window *window = mToolWindow;
   window->setPosition(Vector2i(15, 15));
   window->setLayout(new GroupLayout());
   window->setId("viewer");
@@ -741,6 +742,10 @@ void Viewer::draw(NVGcontext *ctx) {
     }
   }
 
+  if (mToolWindow) {
+    mToolWindow->setPosition(Vector2i(0, 0));
+    mToolWindow->setHeight(mSize.y());
+  }
   Screen::draw(ctx);
 }
 
