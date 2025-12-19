@@ -199,6 +199,11 @@ protected:
   bool mNeedsRepaint;
   uint32_t mDrawIndex;
 
+  /* Status Bar */
+  Window *mStatusWindow;
+  Label *mStatusLabel;
+  ProgressBar *mStatusProgressBar;
+
   /* GUI-related */
   enum Layers {
     InputMesh,

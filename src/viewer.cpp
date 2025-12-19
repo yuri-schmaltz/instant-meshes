@@ -159,6 +159,14 @@ Viewer::Viewer(bool fullscreen, bool deterministic)
   mProgressBar->setFixedWidth(250);
   mProgressWindow->setVisible(false);
 
+  /* Status Bar Initialization */
+  mStatusWindow = new Window(this, "");
+  mStatusWindow->setLayout(
+      new BoxLayout(Orientation::Horizontal, Alignment::Middle, 10, 5));
+  mStatusLabel = new Label(mStatusWindow, "Ready");
+  mStatusProgressBar = new ProgressBar(mStatusWindow);
+  mStatusProgressBar->setFixedWidth(200);
+
   PopupButton *openBtn = new PopupButton(window, "Open mesh");
   openBtn->setBackgroundColor(Theme::greenBtn());
   openBtn->setIcon(ENTYPO_ICON_FOLDER);
@@ -795,19 +803,26 @@ void Viewer::draw(NVGcontext *ctx) {
     }
   }
 
+  int statusHeight = 35;
+
   if (mToolWindow) {
     mToolWindow->setPosition(Vector2i(0, 0));
-    mToolWindow->setHeight(mSize.y());
+    mToolWindow->setHeight(mSize.y() - statusHeight);
   }
 
   if (mLogWindow) {
     int logWidth = 300; // Fixed width for log panel
     mLogWindow->setPosition(Vector2i(mSize.x() - logWidth, 0));
     mLogWindow->setFixedWidth(logWidth);
-    mLogWindow->setHeight(mSize.y());
+    mLogWindow->setHeight(mSize.y() - statusHeight);
     if (mLogScroll)
-      mLogScroll->setFixedHeight(mSize.y() -
+      mLogScroll->setFixedHeight(mSize.y() - statusHeight -
                                  40); // Adjust for window header/padding
+  }
+
+  if (mStatusWindow) {
+    mStatusWindow->setPosition(Vector2i(0, mSize.y() - statusHeight));
+    mStatusWindow->setFixedSize(Vector2i(mSize.x(), statusHeight));
   }
 
   Screen::draw(ctx);
@@ -3718,12 +3733,12 @@ void Viewer::shareGLBuffers() {
 }
 
 void Viewer::showProgress(const std::string &_caption, Float value) {
-  std::string caption = _caption + " ..";
+  std::string caption = _caption;
   tbb::spin_mutex::scoped_lock lock(mProgressMutex);
-  float newValue = mProgressBar->value();
-  if (mProgressLabel->caption() != caption) {
+  float newValue = mStatusProgressBar->value();
+  if (mStatusLabel->caption() != caption) {
     newValue = 0;
-    mProgressLabel->setCaption(caption);
+    mStatusLabel->setCaption(caption);
   }
 
   if (value >= 0)
@@ -3731,21 +3746,29 @@ void Viewer::showProgress(const std::string &_caption, Float value) {
   else
     newValue -= value; /* Negative: relative progress values (OpenMP) */
 
-  mProgressBar->setValue(newValue);
+  mStatusProgressBar->setValue(newValue);
+
+  /* Also update the old progress bar for internal consistency if needed, or
+   * just ignore it */
+  // mProgressBar->setValue(newValue);
+  // mProgressLabel->setCaption(caption);
 
   double time = glfwGetTime();
   if (time - mLastProgressMessage < 0.05 &&
       (value != 0 || time - mOperationStart < 1))
     return;
   glfwMakeContextCurrent(mGLFWWindow);
-  mProgressWindow->setVisible(true);
-  Vector2i prefSize = mProgressWindow->preferredSize(mNVGContext);
-  if (prefSize.x() > mProgressWindow->size().x()) {
-    mProgressWindow->setSize(prefSize);
-    mProgressWindow->performLayout(mNVGContext);
-  }
-  mProgressWindow->center();
-  mProgressWindow->requestFocus();
+
+  /* Disable the popup progress window in favor of status bar */
+  // mProgressWindow->setVisible(true);
+  // Vector2i prefSize = mProgressWindow->preferredSize(mNVGContext);
+  // if (prefSize.x() > mProgressWindow->size().x()) {
+  //   mProgressWindow->setSize(prefSize);
+  //   mProgressWindow->performLayout(mNVGContext);
+  // }
+  // mProgressWindow->center();
+  // mProgressWindow->requestFocus();
+
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
   nvgBeginFrame(mNVGContext, mSize[0], mSize[1], mPixelRatio);
   draw(mNVGContext);
