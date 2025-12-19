@@ -102,6 +102,8 @@ protected:
 
   void refreshStrokes();
 
+  void appendLog(const std::string &message, int type = 0);
+
   void showProgress(const std::string &caption, Float value);
 
   void computeCameraMatrices(Eigen::Matrix4f &model, Eigen::Matrix4f &view,

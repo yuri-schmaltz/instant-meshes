@@ -15,6 +15,7 @@
 #include "dedge.h"
 #include "extract.h"
 #include "gui_serializer.h"
+#include "log_redirect.h"
 #include "meshio.h"
 #include "normal.h"
 #include "reorder.h"
@@ -688,7 +689,47 @@ Viewer::Viewer(bool fullscreen, bool deterministic)
   mLogContainer->setLayout(
       new BoxLayout(Orientation::Vertical, Alignment::Minimum, 0, 2));
 
-  new Label(mLogContainer, "System initialized.", "sans-mono");
+  // Create stream buffers to redirect cout and cerr
+  // We leak these buffers intentionally for the lifetime of the app, or we
+  // could manage them as members
+  static LogStreamBuffer *coutBuf =
+      new LogStreamBuffer([this](const std::string &msg) {
+        appendLog(msg, 0); // Info
+      });
+  static LogStreamBuffer *cerrBuf =
+      new LogStreamBuffer([this](const std::string &msg) {
+        appendLog(msg, 1); // Error
+      });
+
+  std::cout.rdbuf(coutBuf);
+  std::cerr.rdbuf(cerrBuf);
+
+  appendLog("System initialized.", 0);
+  appendLog("Logs redirected to panel.", 0);
+}
+
+void Viewer::appendLog(const std::string &message, int type) {
+  if (!mLogContainer)
+    return;
+
+  // Split message by newlines to avoid massive labels
+  std::stringstream ss(message);
+  std::string line;
+  while (std::getline(ss, line)) {
+    if (line.empty())
+      continue;
+    Label *lbl = new Label(mLogContainer, line, "sans-mono");
+    lbl->setFontSize(14);
+    if (type == 1) { // Error
+      lbl->setColor(Color(255, 100, 100, 255));
+    } else if (type == 2) { // Success
+      lbl->setColor(Color(100, 255, 100, 255));
+    } else {
+      lbl->setColor(Color(200, 200, 200, 255));
+    }
+  }
+  // Auto scroll to bottom
+  performLayout(nvgContext());
 }
 
 Viewer::~Viewer() {
