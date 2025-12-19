@@ -495,9 +495,13 @@ void load_assimp_common(const std::string &filename, MatrixXu &F, MatrixXf &V,
                         const ProgressCallback &progress) {
   Assimp::Importer importer;
   // Request triangulation and joining of identical vertices
+  // Request triangulation.
+  // Note: Removed aiProcess_JoinIdenticalVertices as it causes "Number of
+  // vertices is larger than the corresponding array" error with some .blend
+  // files.
   const aiScene *scene = importer.ReadFile(
-      filename, aiProcess_Triangulate | aiProcess_JoinIdenticalVertices |
-                    aiProcess_GenSmoothNormals | aiProcess_SortByPType);
+      filename, aiProcess_Triangulate | aiProcess_SortByPType |
+                    aiProcess_GenSmoothNormals | aiProcess_SplitLargeMeshes);
 
   if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE ||
       !scene->mRootNode) {
